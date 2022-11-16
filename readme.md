@@ -23,7 +23,9 @@ after the first round, the first 4 cards are revealed. after the second round, t
 
 ### The cards
 
-#### Number cards
+#### Number cards - 160
+
+There are 4 sets of each colour = 160 cards
 
 These cards will have a number from 0-9, and a colour of either red, green, blue or yellow. These cards are used to create hands, as explained below, based on their colour and number, and the relations they have to the other cards in play.
 
@@ -49,39 +51,39 @@ doubles the value of a single bet
 
 can only be played alongside a bet
 
-##### draw 2 cards
+##### draw 2 cards - 20
 
 allows the player to draw two cards from the deck, adding them to their own hand
 
 can only be played at the end of a round
 
-##### reveal 4 cards
+##### reveal 4 cards - 10
 
 the top 4 cards are drawn from the top of the deck and played face up on the table
 
 can only be played at the end of a round
 
-##### discard and draw 
+##### discard and draw - 15
 
 the player chooses a card from their hand to discard, then draws the top two cards from the deck
 
 can only be played at the end of a round
 
-##### draw and discard
+##### draw and discard - 15
 
 the player draws the top three cards from the deck, chooses one to keep, then discards the other two
 
 can only be played at the end of a round
 
-##### colour changer
+##### colour changer - 15
 
 At the end of the game, can be played to change the colour of any of the cards in your hand
 
-##### number changer
+##### number changer - 10
 
 At the end of the game, can be played to change the number of any of the cards in your hand
 
-##### golden card
+##### golden card - 4
 
 Transforms into a number card with a number and colour of the player's choosing
 
