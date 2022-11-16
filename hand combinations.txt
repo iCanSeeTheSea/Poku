@@ -1,43 +1,78 @@
----- 1 ----
+---- 1 card ----
 high card
 
----- 2 ----
+---- 2 card ----
 pair
+flushed pair
 
----- 3 ----
+---- 3 card ----
 triple
+flushed triple
 
----- 4 ----
+---- 4 card ----
 two pair (pair + pair)
 quad
+flushed quad
 
----- 5 ----
+---- 5 card ----
+quint
 full house (triple + pair)
+flush
+straight
+partially flushed full house
+flushed full house
+straight flush
 
----- 6 ----
-triple + triple
-pair + pair + pair
+---- 6 card ----
+sext
+three pair (pair + pair + pair)
+two triple (triple + triple)
+6 card flush
+6 card straight
+three flushed pair
+two flushed triple
+6 card straight flush
 
----- 7 ----
-quad + triple
-triple + pair + pair
+---- 7 card ----
+sept
+7 card full house (quad + triple)
+7 card flush
+7 card straight
+partially flushed full house
+flushed full house
+7 card straight flush
 
----- 8 ----
-quad + quad
-quad + pair + pair
-triple + triple + pair
-pair + pair + pair + pair
+---- 8 card ----
+oct
+four pair (pair + pair + pair + pair)
+two quad (quad + quad)
+8 card flush
+8 card straight
+two flushed two pair
+flushed four pair
+two flushed quad
+8 card straight flush
 
----- 9 ----
-quad + triple + pair
-triple + triple + triple
-triple + pair + pair + pair
+---- 9 card ----
+nonce
+three triple (triple + triple + triple)
+fuller house (quad + triple + pair)
+9 card full house (quint + quad)
+9 card flush
+9 card straight
+flushed three triple
+partially flushed full house
+9 card flushed full house
+9 card straight flush
 
----- 10 ----
-quad + quad + pair
-quad + triple + triple
-quad + pair + pair + pair
-triple + triple + pair + pair
-pair + pair + pair + pair + pair
+---- 10 card ----
+dix
+five pair (pair + pair + pair + pair + pair)
+two quint (quint + quint)
+two full house (triple + triple + pair + pair)
+10 card flush
+10 card straight
+two flushed full house
+10 card straight flush
 
 
