@@ -1,0 +1,43 @@
+---- 1 ----
+high card
+
+---- 2 ----
+pair
+
+---- 3 ----
+triple
+
+---- 4 ----
+two pair (pair + pair)
+quad
+
+---- 5 ----
+full house (triple + pair)
+
+---- 6 ----
+triple + triple
+pair + pair + pair
+
+---- 7 ----
+quad + triple
+triple + pair + pair
+
+---- 8 ----
+quad + quad
+quad + pair + pair
+triple + triple + pair
+pair + pair + pair + pair
+
+---- 9 ----
+quad + triple + pair
+triple + triple + triple
+triple + pair + pair + pair
+
+---- 10 ----
+quad + quad + pair
+quad + triple + triple
+quad + pair + pair + pair
+triple + triple + pair + pair
+pair + pair + pair + pair + pair
+
+
