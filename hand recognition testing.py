@@ -1,7 +1,7 @@
 # testing methods for hand scoring and recognition
 
 from dataclasses import dataclass
-from random import randint
+import random
 
 num_to_colour = {
     0: "red",
@@ -11,8 +11,9 @@ num_to_colour = {
 }
 
 
-@dataclass
+@dataclass(eq=True, frozen=True)
 class Card:
+    __id: int
     __number: int
     __colour: str
 
@@ -30,8 +31,17 @@ class Card:
 
 class CardGroup:
     def __init__(self):
-        self._cards = []
+        self._cards = set()
         self.size = len(self._cards)
+
+    def show_cards(self):
+        shown = []
+        for card in self._cards:
+            shown.append(card.number)
+        return shown
+
+    def add_card(self, card):
+        self._cards.add(card)
 
 
 class Deck(CardGroup):
@@ -40,33 +50,40 @@ class Deck(CardGroup):
 
         for i in range(0, 160):
             colour = num_to_colour[i // 40]
-            self._cards.append(Card(i % 10, colour))
+            self._cards.add(Card(i, i % 10, colour))
 
-    def getRandomCard(self):
-        index = randint(0, len(self._cards)-1)
-        return self._cards.pop(index)
+    def get_random_card(self):
+        card = random.choice(tuple(self._cards))
+        self._cards.remove(card)
+        return card
 
-
-class Hand(CardGroup):
-    def __int__(self):
-        super().__init__()
-        self._score = 0
-
-    def addCard(self, card):
-        self._cards.append(card)
-
-    def showHand(self):
-        shownHand = []
-        for card in self._cards:
-            shownHand.append(card.show())
-        return shownHand
+    def add_card(self, card):
+        return
 
 
-deck = Deck()
-hand = Hand()
-for i in range(0, 5):
-    hand.addCard(deck.getRandomCard())
+class Game:
+    def __init__(self, players):
+        self._table = CardGroup()
+        self._deck = Deck()
+        self._hands = []
 
-print(hand.showHand())
+        for _ in range(players):
+            self._hands.append(CardGroup())
+
+        for _ in range(2):
+            for hand in self._hands:
+                hand.add_card(self._deck.get_random_card())
+
+        for _ in range(5):
+            self._table.add_card(self._deck.get_random_card())
+
+    def show_hand(self, index):
+        shown = self._table.show_cards()
+        return shown + self._hands[index].show_cards()
+
+
+game = Game(1)
+for i in range(1):
+    print(game.show_hand(i))
 
 
