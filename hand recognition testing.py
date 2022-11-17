@@ -92,15 +92,16 @@ class Game:
 def check_for_straight(unique_set):
     unique_set.sort()
 
-    consec_count = 0
-
+    consecutive_count = 0
     for i in range(0, len(unique_set)-1):
-        if unique_set[i] - unique_set[i+1] == 1:
-            consec_count += 1
+        if unique_set[i+1] - unique_set[i] == 1:
+            consecutive_count += 1
+        elif consecutive_count < 5:
+            consecutive_count = 0
 
-    if consec_count >= 5:
-        print(f"{consec_count} card straight")
-
+    if consecutive_count >= 5:
+        return consecutive_count
+    return 0
 
 
 repeat_count = {}
@@ -152,54 +153,55 @@ two quint
 two full house 
 """
 
-check_for_straight(includes)
 
+cards_used = 0
+combinations = []
+pairs = 0
 for i in range(len(freq)):
     if freq[i] >= 5:
         if freq[i+1] >= 5:
-            combo = 'two quint'
-            break
-        elif freq[i+1] >= 4:
-            combo = '9 card full house'
-            break
+            combinations.append([10, 'two quint'])
         else:
-            continue
-    elif freq[i] >= 4:
+            combinations.append([5, 'quint'])
+        if freq[i+1] >= 4:
+            combinations.append([9, '9 card full house'])
+    if freq[i] >= 4:
         if freq[i+1] >= 3:
             if freq[i+2] >= 2:
-                combo = 'fuller house'
-                break
+                combinations.append([9, 'fuller house'])
             else:
-                combo = '7 card full house'
-                break
-        elif freq[i+1] >= 4:
-            combo = 'two quad'
-            break
+                combinations.append([7, '7 card full house'])
+        if freq[i+1] >= 4:
+            combinations.append([8, 'two quad'])
         else:
-            continue
-    elif freq[i] >= 3:
+            combinations.append([4, 'quad'])
+    if freq[i] >= 3:
         if freq[i+1] >= 3:
             if freq[i+2] >= 2 and freq[i+3] >= 2:
-                combo = 'two full house'
-                break
+                combinations.append([10, 'two full house'])
             elif freq[i+2] >= 3:
-                combo = 'three triple'
-                break
+                combinations.append([9, 'three triple'])
             else:
-                combo = 'two triple'
-                break
-        elif freq[i+1] >= 2:
-            combo = '5 card full house'
-            break
+                combinations.append([6, 'two triple'])
         else:
-            continue
-else:
-    pairs = freq.count(2)
-    if pairs > 5:
-        pairs = 5
-    combo = f"{freq.count(2)} pair"
+            combinations.append([3, 'triple'])
+        if freq[i+1] >= 2:
+            combinations.append([5, '5 card full house'])
+    if freq[i] >= 2:
+        pairs += 1
+        if pairs > 5:
+            pairs = 5
 
-print(combo)
+if pairs:
+    combinations.append([pairs*2, f"{pairs} pair"])
+
+
+straight_cards = check_for_straight(includes)
+if straight_cards:
+    combinations.append([straight_cards, f"{straight_cards} card straight"])
+
+print(combinations)
+
 
 """highest frequency:
 2:
