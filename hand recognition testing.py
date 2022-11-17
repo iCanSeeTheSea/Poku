@@ -70,20 +70,106 @@ class Game:
         for _ in range(players):
             self._hands.append(CardGroup())
 
-        for _ in range(2):
+        for _ in range(5):
             for hand in self._hands:
                 hand.add_card(self._deck.get_random_card())
 
-        for _ in range(5):
+        for _ in range(10):
             self._table.add_card(self._deck.get_random_card())
 
-    def show_hand(self, index):
+    def show_nums(self, index):
         shown = self._table.show_cards()
         return shown + self._hands[index].show_cards()
 
 
-game = Game(1)
-for i in range(1):
-    print(game.show_hand(i))
+# pair
+# two pair
+# three of a kind
+# straight
+# full house
+# four of a kind
 
+def check_for_straight(set):
+    s_list = list(set)
+    s_list.sort()
+    hands = []
+    for n in range(5, len(s_list)+1):
+        up_to = n
+        hands.append(s_list[n-5:up_to])
+
+    for h in hands:
+        for i in range(0, len(h)-1):
+            if h[i+1] - h[i] > 1:
+                break
+        else:
+            return True
+
+    return False
+
+
+repeat_count = {}
+game = Game(1)
+hand = game.show_nums(0)
+includes = set(hand)
+repeats = hand.copy()
+for num in includes:
+    repeats.remove(num)
+print(hand, includes, repeats)
+
+
+# if difference == 0:
+#     if check_for_straight(includes):
+#         print('straight')
+# elif difference == 1:
+#     if check_for_straight(includes):
+#         print('straight')
+#     else:
+#         print('pair')
+# elif difference == 2:
+#     if check_for_straight(includes):
+#         print('straight')
+#     elif len(set(repeats)) == 1:
+#         print('three of a kind')
+#     else:
+#         print('two pair')
+# elif difference == 3:
+#     if len(set(repeats)) == 1:
+#         print('four of a kind')
+#     elif len(set(repeats)) == 2:
+#         print('full house')
+#     else:
+#         print('two pair')
+# elif difference == 4:
+#     if len(set(repeats)) <= 2:
+#         print('four of a kind')
+#     else:
+#         print('full house')
+# else:
+#     print('four of a kind')
+
+"""
+straight
+pair
+triple
+two pair 
+quad
+quint
+full house 
+sext
+three pair 
+two triple 
+sept
+7 card full house
+oct
+four pair 
+two quad 
+nonce
+three triple 
+fuller house 
+9 card full house 
+dix
+five pair 
+two quint 
+two full house 
+"""
 
