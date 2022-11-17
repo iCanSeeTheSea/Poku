@@ -89,63 +89,42 @@ class Game:
 # full house
 # four of a kind
 
-def check_for_straight(set):
-    s_list = list(set)
-    s_list.sort()
-    hands = []
-    for n in range(5, len(s_list)+1):
-        up_to = n
-        hands.append(s_list[n-5:up_to])
+def check_for_straight(unique_set):
+    unique_set.sort()
 
-    for h in hands:
-        for i in range(0, len(h)-1):
-            if h[i+1] - h[i] > 1:
-                break
-        else:
-            return True
+    consec_count = 0
 
-    return False
+    for i in range(0, len(unique_set)-1):
+        if unique_set[i] - unique_set[i+1] == 1:
+            consec_count += 1
+
+    if consec_count >= 5:
+        print(f"{consec_count} card straight")
+
 
 
 repeat_count = {}
 game = Game(1)
 hand = game.show_nums(0)
-includes = set(hand)
+hand.sort()
+hand.reverse()
+includes = list(set(hand))
+includes.reverse()
 repeats = hand.copy()
 for num in includes:
     repeats.remove(num)
-print(hand, includes, repeats)
+repeats.sort()
+repeats.reverse()
+
+freq = [1 for _ in range(len(includes))]
+for num in repeats:
+    index = includes.index(num)
+    freq[index] += 1
+freq.sort()
+freq.reverse()
 
 
-# if difference == 0:
-#     if check_for_straight(includes):
-#         print('straight')
-# elif difference == 1:
-#     if check_for_straight(includes):
-#         print('straight')
-#     else:
-#         print('pair')
-# elif difference == 2:
-#     if check_for_straight(includes):
-#         print('straight')
-#     elif len(set(repeats)) == 1:
-#         print('three of a kind')
-#     else:
-#         print('two pair')
-# elif difference == 3:
-#     if len(set(repeats)) == 1:
-#         print('four of a kind')
-#     elif len(set(repeats)) == 2:
-#         print('full house')
-#     else:
-#         print('two pair')
-# elif difference == 4:
-#     if len(set(repeats)) <= 2:
-#         print('four of a kind')
-#     else:
-#         print('full house')
-# else:
-#     print('four of a kind')
+print(hand, includes, repeats, freq)
 
 """
 straight
@@ -173,3 +152,59 @@ two quint
 two full house 
 """
 
+check_for_straight(includes)
+
+for i in range(len(freq)):
+    if freq[i] == 5:
+        if freq[i+1] == 5:
+            print('two quint')
+        elif freq[i+1] == 4:
+            print('9 card full house')
+        else:
+            continue
+    elif freq[i] == 4:
+        if freq[i+1] == 3:
+            if freq[i+2] == 2:
+                print('fuller house')
+            else:
+                print('7 card full house')
+        elif freq[i+1] == 4:
+            print('two quad')
+        else:
+            continue
+    elif freq[i] == 3:
+        if freq[i+1] == 3:
+            if freq[i+2] == 2 and freq[i+3] == 2:
+                print('two full house')
+            elif freq[i+2] == 3:
+                print('three triple')
+            else:
+                print('two triple')
+        elif freq[i+1] == 2:
+            print('5 card full house')
+        else:
+            continue
+    elif freq[i] == 2:
+        print('pair')
+
+"""highest frequency:
+2:
+    - 1-5 pairs
+
+3:
+    - 1-3 triples
+    - 1-2 full houses
+
+4: 
+    - 1-2 quads
+    - full house
+    - fuller house
+
+5: 
+    - 1-2 quints
+    - full house
+
+6 - 10:
+    - sext -> dix
+
+"""
