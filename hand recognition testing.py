@@ -155,37 +155,51 @@ two full house
 check_for_straight(includes)
 
 for i in range(len(freq)):
-    if freq[i] == 5:
-        if freq[i+1] == 5:
-            print('two quint')
-        elif freq[i+1] == 4:
-            print('9 card full house')
+    if freq[i] >= 5:
+        if freq[i+1] >= 5:
+            combo = 'two quint'
+            break
+        elif freq[i+1] >= 4:
+            combo = '9 card full house'
+            break
         else:
             continue
-    elif freq[i] == 4:
-        if freq[i+1] == 3:
-            if freq[i+2] == 2:
-                print('fuller house')
+    elif freq[i] >= 4:
+        if freq[i+1] >= 3:
+            if freq[i+2] >= 2:
+                combo = 'fuller house'
+                break
             else:
-                print('7 card full house')
-        elif freq[i+1] == 4:
-            print('two quad')
+                combo = '7 card full house'
+                break
+        elif freq[i+1] >= 4:
+            combo = 'two quad'
+            break
         else:
             continue
-    elif freq[i] == 3:
-        if freq[i+1] == 3:
-            if freq[i+2] == 2 and freq[i+3] == 2:
-                print('two full house')
-            elif freq[i+2] == 3:
-                print('three triple')
+    elif freq[i] >= 3:
+        if freq[i+1] >= 3:
+            if freq[i+2] >= 2 and freq[i+3] >= 2:
+                combo = 'two full house'
+                break
+            elif freq[i+2] >= 3:
+                combo = 'three triple'
+                break
             else:
-                print('two triple')
-        elif freq[i+1] == 2:
-            print('5 card full house')
+                combo = 'two triple'
+                break
+        elif freq[i+1] >= 2:
+            combo = '5 card full house'
+            break
         else:
             continue
-    elif freq[i] == 2:
-        print('pair')
+else:
+    pairs = freq.count(2)
+    if pairs > 5:
+        pairs = 5
+    combo = f"{freq.count(2)} pair"
+
+print(combo)
 
 """highest frequency:
 2:
