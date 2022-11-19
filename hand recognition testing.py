@@ -31,34 +31,40 @@ class Card:
 
 class CardGroup:
     def __init__(self):
-        self._cards = set()
+        self._cards = [[] for _ in range(10)]
         self.size = len(self._cards)
 
     def show_cards(self):
         shown = []
-        for card in self._cards:
-            shown.append(card.number)
+        for number in self._cards:
+            for card in number:
+                shown.append(card)
         return shown
 
     def add_card(self, card):
-        self._cards.add(card)
+        self._cards[card.number].append(card)
+        self.size += 1
+
+    def get_card_list(self):
+        return self._cards
 
 
 class Deck(CardGroup):
     def __init__(self):
         super().__init__()
+        self._cards = []
 
         for i in range(0, 160):
             colour = num_to_colour[i // 40]
-            self._cards.add(Card(i, i % 10, colour))
+            self._cards.append(Card(i, i % 10, colour))
 
     def get_random_card(self):
-        card = random.choice(tuple(self._cards))
+        card = random.choice(self._cards)
         self._cards.remove(card)
         return card
 
     def add_card(self, card):
-        return
+        pass
 
 
 class Game:
@@ -77,27 +83,37 @@ class Game:
         for _ in range(10):
             self._table.add_card(self._deck.get_random_card())
 
-    def show_nums(self, index):
-        shown = self._table.show_cards()
-        return shown + self._hands[index].show_cards()
+    def get_full_hand(self, index):
+        hand = self._hands[index].show_cards()
+        full_hand = self._table
+        for card in hand:
+            full_hand.add_card(card)
+        return full_hand
 
+    def show_hand(self, index):
+        full_hand = self.get_full_hand(index)
+        return full_hand.show_cards()
 
-# pair
-# two pair
-# three of a kind
-# straight
-# full house
-# four of a kind
+    def get_unique_numbers_and_frequencies(self, index):
+        full_hand = self.get_full_hand(index)
+        unique_nums = []
+        freq = []
+        for number in full_hand.get_card_list():
+            if number:
+                unique_nums.append(number[0].number)
+                freq.append(len(number))
+        return unique_nums, freq
+
 
 def check_for_straight(unique_set):
     unique_set.sort()
 
-    consecutive_count = 0
+    consecutive_count = 1
     for i in range(0, len(unique_set)-1):
         if unique_set[i+1] - unique_set[i] == 1:
             consecutive_count += 1
         elif consecutive_count < 5:
-            consecutive_count = 0
+            consecutive_count = 1
 
     if consecutive_count >= 5:
         return consecutive_count
@@ -106,53 +122,15 @@ def check_for_straight(unique_set):
 
 repeat_count = {}
 game = Game(1)
-hand = game.show_nums(0)
-hand.sort()
+hand = game.show_hand(0)
 hand.reverse()
-includes = list(set(hand))
+includes, freq = game.get_unique_numbers_and_frequencies(0)
 includes.reverse()
-repeats = hand.copy()
-for num in includes:
-    repeats.remove(num)
-repeats.sort()
-repeats.reverse()
-
-freq = [1 for _ in range(len(includes))]
-for num in repeats:
-    index = includes.index(num)
-    freq[index] += 1
 freq.sort()
 freq.reverse()
 
 
-print(hand, includes, repeats, freq)
-
-"""
-straight
-pair
-triple
-two pair 
-quad
-quint
-full house 
-sext
-three pair 
-two triple 
-sept
-7 card full house
-oct
-four pair 
-two quad 
-nonce
-three triple 
-fuller house 
-9 card full house 
-dix
-five pair 
-two quint 
-two full house 
-"""
-
+print(includes, freq)
 
 cards_used = 0
 combinations = []
@@ -195,32 +173,8 @@ for i in range(len(freq)):
 if pairs:
     combinations.append([pairs*2, f"{pairs} pair"])
 
-
 straight_cards = check_for_straight(includes)
 if straight_cards:
     combinations.append([straight_cards, f"{straight_cards} card straight"])
 
 print(combinations)
-
-
-"""highest frequency:
-2:
-    - 1-5 pairs
-
-3:
-    - 1-3 triples
-    - 1-2 full houses
-
-4: 
-    - 1-2 quads
-    - full house
-    - fuller house
-
-5: 
-    - 1-2 quints
-    - full house
-
-6 - 10:
-    - sext -> dix
-
-"""
